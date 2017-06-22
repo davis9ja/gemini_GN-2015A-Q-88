@@ -67,13 +67,13 @@ delete ("tmpflat", verify=no)
 
 delete ("IRflats.fits,IRflats_bpm.pl", verify=no)
 nsflat ("rn@IRflats.lis", flatfile="IRflats.fits", fl_inter=no, fl_corner=yes, \
-    process="fit",  order=10, lthresh=100., thr_flo=0.35, \
+    process="fit", fitsec="MDF", order=10, lthresh=100., thr_flo=0.35, \
     thr_fup=1.5)
 #display ("IRflats.fits[sci,1]", 1, zr=yes, zs=yes)
 
 delete ("QHflats.fits,QHflats_bpm.pl", verify=no)
 nsflat ("rn@QHflats.lis", flatfile="QHflats.fits", fl_inter=no, fl_corner=yes, \
-    process="fit", order=5, lthresh=50., thr_flo=0.35, \
+    process="fit", fitsec="MDF", order=5, lthresh=50., thr_flo=0.35, \
     thr_fup=4.0)
 
 imdelete ("final_flat.fits", verify=no)
