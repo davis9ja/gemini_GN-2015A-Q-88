@@ -102,7 +102,7 @@ nsflat ("rn@IRflats.lis", flatfile="IRflats.fits", fl_inter=no, fl_corner=yes, \
 #display ("IRflats.fits[sci,1]", 1, zr=yes, zs=yes)
 
 delete ("QHflats.fits,QHflats_bpm.pl", verify=no)
-nsflat ("rn@QHflats.lis", flatfile="QHflats.fits", fl_inter=yes, fl_corner=yes, \
+nsflat ("rn@QHflats.lis", flatfile="QHflats.fits", fl_inter=no, fl_corner=yes, \
     process="fit", fitsec="MDF", order=5, lthresh=50., thr_flo=0.35, \
     thr_fup=4.0)
 
@@ -178,7 +178,7 @@ nscombine ("rn@obj.lis", output="obj_comb")
 
 imdelete ("ftell_comb.fits", verify=no)
 nsfitcoords ("tell_comb.fits", lamptrans="warc_comb", sdisttrans="pinhole", \
-    fl_inter=yes, lxorder=2, lyorder=3, sxorder=4, syorder=4)
+    fl_inter=no, lxorder=2, lyorder=3, sxorder=4, syorder=4)
 
 imdelete ("tftell_comb.fits", verify=no)
 nstransform ("ftell_comb.fits")
@@ -187,7 +187,7 @@ nstransform ("ftell_comb.fits")
 
 imdelete ("fobj_comb.fits", verify=no)
 nsfitcoords ("obj_comb.fits", lamptrans="warc_comb", sdisttrans="pinhole", \
-    fl_inter=yes, lxorder=2, lyorder=3, sxorder=4, syorder=4)
+    fl_inter=no, lxorder=2, lyorder=3, sxorder=4, syorder=4)
 
 imdelete ("tfobj_comb.fits", verify=no)
 nstransform ("fobj_comb.fits")
