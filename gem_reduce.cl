@@ -46,15 +46,38 @@ set stdimage=imt1024
 ##########
 # STEP 3 #
 ##########
+#
+# 20150603S --
+#
+# science  ::  148-159, 165-172, 177-184
+# telluric ::  140-143(night), 210-213(night)
+# IRflats  ::  187-192
+# QHflats  ::  193-202
+# arcs     ::  185-186
+# pinholes ::  276-280
+#
+# N20150802S --
+#
+# science  ::  88-95, 102-109
+# telluric ::  80-83(night), 132-135(day)
+# IRflats  ::  112-117
+# QHflats  ::  118-127
+# arcs     ::  110-111
+# pinholes ::  264-268
+#
+#
+# separate IRflats, QHflats, and pinholes --
+# hselect <data_prefix>*[0] field=$I,GCALLAMP,SLIT expr='OBSTYPE=="FLAT"'
+#
 
 delete ("obj.lis,telluric.lis,arcs.lis,IRflats.lis,QHflats.lis,pinholes.lis,all.lis", verify=no)
 
-gemlist "N20150603S" "148-159" > "obj.lis"       # science   148-159, 165-172, 177-184
-gemlist "N20150603S" "140-143" > "telluric.lis"  # telluric  140-143, 210-213    
-gemlist "N20150603S" "187-192" > "IRflats.lis"   # up to order 3
-gemlist "N20150603S" "193-202" > "QHflats.lis"   # orders 4-8
-gemlist "N20150603S" "185-186" > "arcs.lis"
-gemlist "N20150603S" "276" > "pinholes.lis"  # pinholes 276-280
+gemlist "N20150802S" "88-95" > "obj.lis"       # science   148-159, 165-172, 177-184
+gemlist "N20150802S" "82-83" > "telluric.lis"  # telluric  140-143, 210-213    
+gemlist "N20150802S" "112-117" > "IRflats.lis"   # up to order 3
+gemlist "N20150802S" "118-127" > "QHflats.lis"   # orders 4-8
+gemlist "N20150802S" "110-111" > "arcs.lis"
+gemlist "N20150802S" "264" > "pinholes.lis"  # pinholes 276-280
 
 concat ("IRflats.lis,QHflats.lis", "allflats.lis")
 concat ("allflats.lis,obj.lis,telluric.lis,arcs.lis,pinholes.lis", "all.lis")
