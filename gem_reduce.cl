@@ -1,4 +1,4 @@
-
+# made a change
 # load packages
 
 gemini
@@ -10,7 +10,7 @@ unlearn ("gnirs")
 string rawdir, image
 struct *scanfile
 
-gnirs.logfile = "gnirs_xd_148-159.log"
+gnirs.logfile = "gemini_GN-2015A-Q-88_reduction-run.log"
 
 delete (gnirs.logfile, verify=no)
 
@@ -60,7 +60,7 @@ printlog ("Order 3 Flats: ", gnirs.logfile, verbose=yes)
 imstatistic "@tmpflat" | tee (gnirs.logfile, append=yes)
 delete ("tmpflat", verify=no)
 
-gemextn "rn@QHflats.lis" proc="expand" extname="SCI" extver="3" > "tmpflat"
+gemextn "rn@QHflats.lis" proc="expand" extname="SCI" extver="2" > "tmpflat"
 printlog ("Order 5 Flats: ", gnirs.logfile, verbose=yes)
 imstatistic "@tmpflat" | tee (gnirs.logfile, append=yes)
 delete ("tmpflat", verify=no)
@@ -72,7 +72,7 @@ nsflat ("rn@IRflats.lis", flatfile="IRflats.fits", fl_inter=no, fl_corner=yes, \
 display ("IRflats.fits[sci,1]", 1, zr=yes, zs=yes)
 
 delete ("QHflats.fits,QHflats_bpm.pl", verify=no)
-nsflat ("rn@QHflats.lis", flatfile="QHflats.fits", fl_inter=yes, fl_corner=yes, \
+nsflat ("rn@QHflats.lis", flatfile="QHflats.fits", fl_inter=no, fl_corner=yes, \
     process="fit", fitsec="MDF", order=5, lthresh=50., thr_flo=0.35, \
     thr_fup=4.0)
 
@@ -93,8 +93,8 @@ nsreduce ("n@pinholes.lis", fl_cut=yes, fl_nsappwave=no, fl_dark=no, \
 imdelete ("pinholes.fits", verify=no)
 imrename ("rn@pinholes.lis", "pinhole")
 
-nssdist ("pinhole", coordlist="gnirs$data/pinholes-short-dense.lis", \
-    fl_inter=yes, function="legendre", order=5, minsep=5, thresh=1000, \
+nssdist ("pinhole", coordlist="gnirs$data/pinholes-short-dense-north.lis", \
+    fl_inter=no, function="legendre", order=5, minsep=5, thresh=1000, \
     nlost=0.)
 
 imdelete ("arc_comb", verify=no)
