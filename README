@@ -1,15 +1,15 @@
 ################################################################################
-#																			   #
+#                                                                              #
 # This code reduces data received from Gemini North observation GN-2015A-Q-88  #
 # target object CXO J174042.0-280724, a known x-ray transient. Code is still   #
-# in development, and changes will occur often.								   #
-#																			   #
+# in development, and changes will occur often.                                #
+#                                                                              #
 # Based on the example code provided by the Gemini Observatory, located in     #
-# gnirsinfo.   		   				 			   							   #
-#																			   #
-# Author: Jacob Davison														   #
-# Title:  gem_reduce.cl														   #
-#																			   #
+# gnirsinfo.                                                                   #
+#                                                                              #
+# Author: Jacob Davison                                                        #
+# Title:  gem_reduce.cl                                                        #
+#                                                                              #
 ################################################################################
 
 DESCRIPTION:
