@@ -67,20 +67,20 @@ delete ("tmpflat", verify=no)
 
 delete ("IRflats.fits,IRflats_bpm.pl", verify=no)
 nsflat ("rn@IRflats.lis", flatfile="IRflats.fits", fl_inter=no, fl_corner=yes, \
-    process="fit", fitsec="MDF",  order=10, lthresh=100., thr_flo=0.35, \
+    process="fit",  order=10, lthresh=100., thr_flo=0.35, \
     thr_fup=1.5)
-display ("IRflats.fits[sci,1]", 1, zr=yes, zs=yes)
+#display ("IRflats.fits[sci,1]", 1, zr=yes, zs=yes)
 
 delete ("QHflats.fits,QHflats_bpm.pl", verify=no)
 nsflat ("rn@QHflats.lis", flatfile="QHflats.fits", fl_inter=no, fl_corner=yes, \
-    process="fit", fitsec="MDF", order=5, lthresh=50., thr_flo=0.35, \
+    process="fit", order=5, lthresh=50., thr_flo=0.35, \
     thr_fup=4.0)
 
 imdelete ("final_flat.fits", verify=no)
 fxcopy ("IRflats.fits", "final_flat.fits", groups="0-3", new_file=yes)
 fxinsert ("QHflats.fits", "final_flat.fits[3]", groups="4-18")
 
-nxdisplay ("final_flat.fits", 1)
+#nxdisplay ("final_flat.fits", 1)
 
 imdelete ("rn@arcs.lis", verify=no)
 nsreduce ("n@arcs.lis", fl_cut=yes, fl_nsappwave=no, fl_dark=no, fl_sky=no, \
@@ -115,12 +115,12 @@ nsreduce ("n@obj.lis", fl_corner=yes, fl_nsappwave=no, fl_sky=yes, \
 imdelete ("tell_comb.fits", verify=no)
 nscombine ("rn@telluric.lis", output="tell_comb")
 
-nxdisplay ("tell_comb.fits", 1)
+#nxdisplay ("tell_comb.fits", 1)
 
 imdelete ("obj_comb.fits", verify=no)
 nscombine ("rn@obj.lis", output="obj_comb")
 
-nxdisplay ("obj_comb.fits", 1)
+#nxdisplay ("obj_comb.fits", 1)
 
 imdelete ("ftell_comb.fits", verify=no)
 nsfitcoords ("tell_comb.fits", lamptrans="warc_comb", sdisttrans="pinhole", \
@@ -129,7 +129,7 @@ nsfitcoords ("tell_comb.fits", lamptrans="warc_comb", sdisttrans="pinhole", \
 imdelete ("tftell_comb.fits", verify=no)
 nstransform ("ftell_comb.fits")
 
-nxdisplay ("tftell_comb.fits", 1)
+#nxdisplay ("tftell_comb.fits", 1)
 
 imdelete ("fobj_comb.fits", verify=no)
 nsfitcoords ("obj_comb.fits", lamptrans="warc_comb", sdisttrans="pinhole", \
@@ -138,7 +138,7 @@ nsfitcoords ("obj_comb.fits", lamptrans="warc_comb", sdisttrans="pinhole", \
 imdelete ("tfobj_comb.fits", verify=no)
 nstransform ("fobj_comb.fits")
 
-nxdisplay ("tfobj_comb.fits", 1)
+#nxdisplay ("tfobj_comb.fits", 1)
 
 imdelete ("xtftell_comb.fits", verify=no)
 nsextract ("tftell_comb.fits", line=750, nsum=20, upper=6, low=-6, \
