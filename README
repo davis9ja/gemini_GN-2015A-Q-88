@@ -1,0 +1,42 @@
+###################################################################################
+#																				  #
+# This code reduces data received from Gemini North observation GN-2015A-Q-88 of  #
+# target object CXO J174042.0-280724, a known x-ray transient. Code is still in   #
+# development, and changes will occur often.									  #
+#																				  #
+# Based on the example code provided by the Gemini Observatory, located in        #
+# gnirsinfo.   		   				 			   								  #
+#																				  #
+# Author: Jacob Davison															  #
+# Title:  gem_reduce.cl															  #
+#																				  #
+###################################################################################
+
+DESCRIPTION:
+
+This PyRAF script is strongly modeled after example code provided by the Gemini
+Observatory. The data reduced are cross-dispersed, collected on two different days
+(3 Jun 2015 and 2 Aug 2015) at Gemini North. The data are to be used in order to
+classify the donor star in the x-ray binary system CXO J174042.0-280724. The GNIRS
+instrument was used to collect those data, and the K-band contains the near-infrared
+(NIR) spectral information required to classify the donor star (from separate
+photometry, the object is hypothesized with great certainty to be an F-type dwarf
+star). Data were obtain from GNIRS with a 32 l/mm grating and 0.3 arcsec slit at a
+central wavelength of 1.650 microns. Lamp flats were collected using an infrared lamp
+and a quartz-halogen lamp. An Argon arc lamp was used to calibrate wavelength as a
+function of pixel number.
+
+For more information on the GNIRS instrument and its specifications, please visit
+http://www.gemini.edu/sciops/instruments/gnirs/.
+
+3 Jun 2015 --
+Science target:   CXO J174042.0-280724
+Standard star 1:  HIP 87108
+Standard star 2:  HIP 79881
+Standard star 3:  HIP 93691
+
+2 Aug 2015 --
+Science target:   CXO J174042.0-280724
+Standard star 1:  HIP 79881
+Standard star 2:  HIP 93691
+
