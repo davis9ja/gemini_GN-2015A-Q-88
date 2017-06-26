@@ -68,16 +68,16 @@ set stdimage=imt1024
 #
 # separate IRflats, QHflats, and pinholes --
 # hselect <data_prefix>*[0] field=$I,GCALLAMP,SLIT expr='OBSTYPE=="FLAT"'
-#
+# hselect <data_prefix>*[0] field=$I,OBJECT,OBSTYPE,OBSCLASS expr=yes
 
 delete ("obj.lis,telluric.lis,arcs.lis,IRflats.lis,QHflats.lis,pinholes.lis,all.lis", verify=no)
 
-gemlist "N20150802S" "88-95" > "obj.lis"       # science   148-159, 165-172, 177-184
-gemlist "N20150802S" "82-83" > "telluric.lis"  # telluric  140-143, 210-213    
-gemlist "N20150802S" "112-117" > "IRflats.lis"   # up to order 3
-gemlist "N20150802S" "118-127" > "QHflats.lis"   # orders 4-8
+gemlist "N20150802S" "88-95" > "obj.lis"
+gemlist "N20150802S" "82-83" > "telluric.lis"
+gemlist "N20150802S" "112-117" > "IRflats.lis"
+gemlist "N20150802S" "118-127" > "QHflats.lis"
 gemlist "N20150802S" "110-111" > "arcs.lis"
-gemlist "N20150802S" "264" > "pinholes.lis"  # pinholes 276-280
+gemlist "N20150802S" "264" > "pinholes.lis"
 
 concat ("IRflats.lis,QHflats.lis", "allflats.lis")
 concat ("allflats.lis,obj.lis,telluric.lis,arcs.lis,pinholes.lis", "all.lis")
