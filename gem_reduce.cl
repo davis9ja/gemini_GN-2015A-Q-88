@@ -72,8 +72,8 @@ set stdimage=imt1024
 
 delete ("obj.lis,telluric.lis,arcs.lis,IRflats.lis,QHflats.lis,pinholes.lis,all.lis", verify=no)
 
-gemlist "N20150802S" "88-95" > "obj.lis"
-gemlist "N20150802S" "82-83" > "telluric.lis"
+gemlist "N20150802S" "102-109" > "obj.lis"
+gemlist "N20150802S" "132-135" > "telluric.lis"
 gemlist "N20150802S" "112-117" > "IRflats.lis"
 gemlist "N20150802S" "118-127" > "QHflats.lis"
 gemlist "N20150802S" "110-111" > "arcs.lis"
@@ -155,7 +155,7 @@ imrename ("rn@pinholes.lis", "pinhole")
 ##########
 
 nssdist ("pinhole", coordlist="gnirs$data/pinholes-short-dense-north.lis", \
-    fl_inter=no, function="legendre", order=5, minsep=5, thresh=1000, \
+    fl_inter=yes, function="legendre", order=5, minsep=5, thresh=1000, \
     nlost=0.)
 
 ##########
@@ -201,7 +201,7 @@ nscombine ("rn@obj.lis", output="obj_comb")
 
 imdelete ("ftell_comb.fits", verify=no)
 nsfitcoords ("tell_comb.fits", lamptrans="warc_comb", sdisttrans="pinhole", \
-    fl_inter=no, lxorder=2, lyorder=3, sxorder=4, syorder=4)
+    fl_inter=yes, lxorder=2, lyorder=3, sxorder=4, syorder=4)
 
 imdelete ("tftell_comb.fits", verify=no)
 nstransform ("ftell_comb.fits")
@@ -233,5 +233,6 @@ nsextract ("tfobj_comb.fits", line=750, nsum=20, upper=6, low=-6, \
 # STEP 14 #
 ###########
 
-imdelete ("axtfobj_comb.fits", verify=no)
-nstelluric ("xtfobj_comb.fits", "xtftell_comb.fits")
+#imdelete ("axtfobj_comb.fits", verify=no)
+#nstelluric ("xtfobj_comb.fits", "xtftell_comb.fits")
+
