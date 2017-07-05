@@ -28,7 +28,7 @@ figure = plt.figure(1, figsize=(14,8))
 
 i=0
 for pair in pairs:
-    # science
+    # generate science data spectrum
     sci_file = fits.open(pair[0])[1]
     sci_wcs = specwcs.Spectrum1DPolynomialWCS(degree=1,
                                               unit='angstrom',
@@ -36,7 +36,7 @@ for pair in pairs:
                                               c1=sci_file.header['CD1_1'])
     sci_spec = Spectrum1D(flux=sci_file.data, wcs=sci_wcs)
 
-    # standard star
+    # generate standard star spectrum
     tel_file = fits.open(pair[1])[1]
     tel_wcs = specwcs.Spectrum1DPolynomialWCS(degree=1,
                                               unit='angstrom',
