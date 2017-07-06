@@ -72,12 +72,12 @@ set stdimage=imt1024
 
 delete ("obj.lis,telluric.lis,arcs.lis,IRflats.lis,QHflats.lis,pinholes.lis,all.lis", verify=no)
 
-gemlist "N20150802S" "102-109" > "obj.lis"
-gemlist "N20150802S" "132-135" > "telluric.lis"
-gemlist "N20150802S" "112-117" > "IRflats.lis"
-gemlist "N20150802S" "118-127" > "QHflats.lis"
-gemlist "N20150802S" "110-111" > "arcs.lis"
-gemlist "N20150802S" "264" > "pinholes.lis"
+gemlist "N20150603S" "148-159" > "obj.lis"
+gemlist "N20150603S" "212-213" > "telluric.lis"
+gemlist "N20150603S" "187-192" > "IRflats.lis"
+gemlist "N20150603S" "193-202" > "QHflats.lis"
+gemlist "N20150603S" "185-186" > "arcs.lis"
+gemlist "N20150603S" "276" > "pinholes.lis"
 
 concat ("IRflats.lis,QHflats.lis", "allflats.lis")
 concat ("allflats.lis,obj.lis,telluric.lis,arcs.lis,pinholes.lis", "all.lis")
@@ -155,8 +155,8 @@ imrename ("rn@pinholes.lis", "pinhole")
 ##########
 
 nssdist ("pinhole", coordlist="gnirs$data/pinholes-short-dense-north.lis", \
-    fl_inter=yes, function="legendre", order=5, minsep=5, thresh=1000, \
-    nlost=0.)
+        fl_inter=no, function="legendre", order=5, minsep=5, thresh=1000, \
+        nlost=0.)
 
 ##########
 # STEP 9 #
@@ -167,7 +167,7 @@ nscombine ("rn@arcs.lis", output="arc_comb")
 
 imdelete ("warc_comb", verify=no)
 nswavelength ("arc_comb", coordlist="gnirs$data/lowresargon.dat", \
-    fl_median=yes, fl_inter=yes, threshold=300., nlost=10, fwidth=5.)
+             fl_median=yes, fl_inter=no, threshold=300., nlost=10, fwidth=5.)
 
 ###########
 # STEP 10 #
@@ -179,7 +179,7 @@ nsreduce ("n@telluric.lis", fl_corner=yes, fl_nsappwave=no, fl_sky=yes, \
 
 imdelete ("rn@obj.lis", verify=no)
 nsreduce ("n@obj.lis", fl_corner=yes, fl_nsappwave=no, fl_sky=yes, \
-    skyrange=INDEF, fl_flat=yes, flatimage="final_flat.fits", nodsize=3.0)
+         skyrange=INDEF, fl_flat=yes, flatimage="final_flat.fits", nodsize=3.0)
 
 ###########
 # STEP 11 #
@@ -201,7 +201,7 @@ nscombine ("rn@obj.lis", output="obj_comb")
 
 imdelete ("ftell_comb.fits", verify=no)
 nsfitcoords ("tell_comb.fits", lamptrans="warc_comb", sdisttrans="pinhole", \
-    fl_inter=yes, lxorder=2, lyorder=3, sxorder=4, syorder=4)
+    fl_inter=no, lxorder=2, lyorder=3, sxorder=4, syorder=4)
 
 imdelete ("tftell_comb.fits", verify=no)
 nstransform ("ftell_comb.fits")
@@ -222,12 +222,14 @@ nstransform ("fobj_comb.fits")
 ###########
 
 imdelete ("xtftell_comb.fits", verify=no)
+#imdelete ("N20150802S_tel_all.fits", verify=no)
 nsextract ("tftell_comb.fits", line=750, nsum=20, upper=6, low=-6, \
-    fl_inter=no, fl_apall=yes, fl_trace=yes)
+          fl_inter=no, fl_apall=yes, fl_trace=yes)
 
 imdelete ("xtfobj_comb.fits", verify=no)
+#imdelete ("N20150802S_obj_all.fits", verify=no)
 nsextract ("tfobj_comb.fits", line=750, nsum=20, upper=6, low=-6, \
-    fl_inter=no, fl_trace=yes, tr_nsum=5, tr_step=2)
+          fl_inter=no, fl_trace=yes, tr_nsum=5, tr_step=2)
 
 ###########
 # STEP 14 #
