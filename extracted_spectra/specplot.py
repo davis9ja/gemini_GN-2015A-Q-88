@@ -76,9 +76,9 @@ for pair in pairs:
     # add absorption/emission feature flag
     plt.axvline(x=21070.8, c='k', ls='--', lw=0.5)     # He(?) or Mg I
     plt.axvline(x=21658.4, c='blue', ls='--', lw=0.5)  # H Br gamma
-    plt.axvline(x=21175.7, c='k', ls='--', lw=0.5)     #Ti I(?)
-    plt.axvline(x=22349.6, c='k', ls='--', lw=0.5)     #Fe I(?)
-    plt.axvline(x=22614.7, c='k', ls='--', lw=0.5)     #Ca I 
+    plt.axvline(x=21175.7, c='k', ls='--', lw=0.5)     #Al I
+    #plt.axvline(x=22349.6, c='k', ls='--', lw=0.5)     #Fe I(?)
+    #plt.axvline(x=22614.7, c='k', ls='--', lw=0.5)     #Ca I 
     plt.axvline(x=23174.7, c='blue', ls='--', lw=0.5)  # CO-12 3-1
     plt.axvline(x=23709.7, c='blue', ls='--', lw=0.5)  # CO-12        
 
