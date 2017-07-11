@@ -20,12 +20,14 @@ days (3 Jun 2015 and 2 Aug 2015) at Gemini North. The data are to be used in
 order to classify the donor star in the x-ray binary system
 CXO J174042.0-280724. The GNIRS instrument was used to collect those data, and
 the K-band contains the near-infrared (NIR) spectral information required to
-classify the donor star (from separate photometry, the object is hypothesized
-with great certainty to be an F-type dwarf star). Data were obtain from GNIRS
-with a 32 l/mm grating and 0.3 arcsec slit at a central wavelength of 1.650
-microns. Lamp flats were collected using an infrared lamp and a quartz-halogen
-lamp. An Argon arc lamp was used to calibrate wavelength as a function of
-pixel number.
+classify the donor star. Data were obtained from GNIRS with a 32 l/mm grating
+and 0.3 arcsec slit at a central wavelength of 1.650 microns. Lamp flats were
+collected using an infrared lamp and a quartz-halogen lamp. An Argon arc lamp
+was used to calibrate wavelength as a function of pixel number. The GNIRS
+short cross-dispersion (SXD) prism was used with the short blue camera
+(0.15"/pix) and a slit length of 7", to cover the range of diffraction order 3
+to 8 (corresponding to 0.85-2.5 microns). The spectral resolution of this
+GNIRS configuration was about R~1800.
 
 For more information on the GNIRS instrument and its specifications, please
 visit http://www.gemini.edu/sciops/instruments/gnirs/.
