@@ -27,7 +27,8 @@ was used to calibrate wavelength as a function of pixel number. The GNIRS
 short cross-dispersion (SXD) prism was used with the short blue camera
 (0.15"/pix) and a slit length of 7", to cover the range of diffraction order 3
 to 8 (corresponding to 0.85-2.5 microns). The spectral resolution of this
-GNIRS configuration was about R~1800.
+GNIRS configuration was about R~1800. Pinhole flats are used to trace the
+spatial location of the spectra.
 
 For more information on the GNIRS instrument and its specifications, please
 visit http://www.gemini.edu/sciops/instruments/gnirs/.
