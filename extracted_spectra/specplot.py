@@ -1,3 +1,9 @@
+###################################
+# Title:   specplot
+# Author:  Jacob Davison
+# Version: 18 Jul 2017
+###################################
+
 import matplotlib.pyplot as plt
 from matplotlib.widgets import MultiCursor
 
@@ -5,79 +11,68 @@ from astropy.io import fits
 from specutils import Spectrum1D
 from specutils.wcs import specwcs
 
+# find the average flux in a spectrum
 def mean(val_list):
     return float(sum(val_list)) / max(float(len(val_list)), 1)
 
-def to_wn(ang):
-    return 1/(ang/10.**8)
+# find the minimum mean flux in a list of spectra
+def find_min_mean(spectra):
+    min_mean = float('inf')
+    for spectrum in spectra:
+        this_mean = mean(spectrum.flux)
+        if this_mean < min_mean:
+            min_mean = this_mean
 
-#extracted_spectra = ['xtfobj_N20150802S_88-95_HIP79881.fits',
-#                     'xtftell_N20150802S_88-95_HIP79881.fits',
-#                     'xtfobj_N20150802S_88-95_HIP93691.fits',
-#                     'xtftell_N20150802S_88-95_HIP93691.fits',
-#                     'xtfobj_N20150802S_102-109_HIP79881.fits',
-#                     'xtftell_N20150802S_102-109_HIP79881.fits',
-#                     'xtfobj_N20150802S_102-109_HIP93691.fits',
-#                     'xtftell_N20150802S_102-109_HIP93691.fits']
-#sci_fits = extracted_spectra[::2]
-#tel_fits = extracted_spectra[1::2]
-#pairs = [(sci_fits[i], tel_fits[i]) for i in range(len(sci_fits))]
-pairs = [("N20150802S_obj_all.fits", "N20150802S_tel_all.fits"), ("N20150603S_obj_all.fits", "N20150603S_tel_all.fits"), ("obj_all.fits", "tel_all.fits")]
-#pairs = [("obj_all.fits", "tel_all.fits")]
+    return min_mean
+
+# containers relevant for plotting
 plt_tup = ()
-
+spectra = []
+fits_files = ['fits/AUG_TELL_K_HIP93691NS.fits',
+              'fits/AUG_TELL_K_HIP79881NS.fits',
+              'fits/AUG_OBJ_K.fits',
+              'fits/AUG_OBJ_K_clean_HIP79881.fits',
+              'fits/AUG_OBJ_K_clean_HIP93691.fits']
 figure = plt.figure(1, figsize=(14,8))
 
+# put all Spectrum1D objects created from fits files into container
+for raw_file in fits_files:
+    fits_file = fits.open(raw_file)[0]
+    fits_wcs = specwcs.Spectrum1DPolynomialWCS(degree=1,
+                                               unit='angstrom',
+                                               c0=fits_file.header['CRVAL1'],
+                                               c1=fits_file.header['CD1_1'])
+    fits_spec = Spectrum1D(flux=fits_file.data, wcs=fits_wcs)
+    spectra.append((fits_spec, raw_file))
+
+# get the value of the minimum mean (used for scaling)
+min_mean = find_min_mean([x[0] for x in spectra])
 i=0
-for pair in pairs:
-    print pair
-    # generate science data spectrum
-#    sci_file = fits.open(pair[0])[1]
-    sci_file = fits.open(pair[0])[0]
-    sci_wcs = specwcs.Spectrum1DPolynomialWCS(degree=1,
-                                              unit='angstrom',
-                                              c0=sci_file.header['CRVAL1'],
-                                              c1=sci_file.header['CD1_1'])
-    sci_spec = Spectrum1D(flux=sci_file.data, wcs=sci_wcs)
 
-    # generate standard star spectrum
-#    tel_file = fits.open(pair[1])[1]
-    tel_file = fits.open(pair[1])[0]
-    tel_wcs = specwcs.Spectrum1DPolynomialWCS(degree=1,
-                                              unit='angstrom',
-                                              c0=tel_file.header['CRVAL1'],
-                                              c1=tel_file.header['CD1_1'])
-    tel_spec = Spectrum1D(flux=tel_file.data, wcs=tel_wcs)
+# plot each spectrum in the "spectra" container
+for spectrum in spectra:
     
-    # before plotting, scale spectra relative to spectrum with smaller avg flux
-    sci_mean = mean(sci_spec.flux)
-    tel_mean = mean(tel_spec.flux)
-    sci_scale = (tel_mean/sci_mean if sci_mean > tel_mean else 1) 
-    tel_scale = (sci_mean/tel_mean if tel_mean > sci_mean else 1)
+    fits_spec = spectrum[0]
+    fits_name = spectrum[1]
+    
+    # before plotting, calculate spectrum scale relative to spectrum with smallest avg flux
+    fits_mean = mean(fits_spec.flux)
+    fits_scale = min_mean/fits_mean if fits_mean > min_mean else 1
 
-    # calculate offset, assuming science is always on top of standard star spectrum
-    sci_min = min(sci_spec.flux)*sci_scale
-    tel_max = max(tel_spec.flux)*tel_scale
-    threshold = 0.0*tel_max #arbitrary
-    offset = abs(tel_max) + abs(sci_min) + threshold
+    # calculate offset using minimum mean
+    threshold = 0.5 #arbitrary
+    offset = min_mean + threshold
 
-#    plt.subplot(4,1,i+1)
-    plt.subplot(3,1,i+1)
-    plt.plot(sci_spec.dispersion, sci_spec.flux*sci_scale+offset,
-             label=pair[0],
-             color='red',
+    # plot scaled, offset flux versus dispersion
+    plt.plot(fits_spec.dispersion, fits_spec.flux*fits_scale+offset*i,
+             label=fits_name,
              linewidth=0.5)
-
-    plt.plot(tel_spec.dispersion, tel_spec.flux*tel_scale,
-             label=pair[1],
-             linewidth=0.5)
-
 
     # add absorption/emission feature flag
-    plt.axvline(x=21070.8, c='k', ls='--', lw=0.5)     # He(?) or Mg I
+    plt.axvline(x=21069, c='k', ls='--', lw=0.5)     # He(?) or Mg I
     plt.axvline(x=21658.4, c='blue', ls='--', lw=0.5)  # H Br gamma
     plt.axvline(x=21175.7, c='k', ls='--', lw=0.5)     #Al I
-    #plt.axvline(x=22349.6, c='k', ls='--', lw=0.5)     #Fe I(?)
+    plt.axvline(x=22017, c='k', ls='--', lw=0.5)       #Ti I
     #plt.axvline(x=22614.7, c='k', ls='--', lw=0.5)     #Ca I 
     plt.axvline(x=23174.7, c='blue', ls='--', lw=0.5)  # CO-12 3-1
     plt.axvline(x=23709.7, c='blue', ls='--', lw=0.5)  # CO-12        
@@ -89,5 +84,5 @@ for pair in pairs:
     plt.legend(loc='best')
     i += 1
     plt_tup += (plt.gca().axes,)
-multi = MultiCursor(figure.canvas, plt_tup, color='k', lw=0.3)
+multi = MultiCursor(figure.canvas, plt_tup, color='k', lw=0.1, ls='-.')
 plt.show()
